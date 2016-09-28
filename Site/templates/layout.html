@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Darties report system</title>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link href="{{ urlPath }}/css/bootstrap-tour.css" rel="stylesheet">
+  <link href="{{ urlPath }}/css/darties.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+  <div id="wrapper">
+
+    <!-- header -->
+    <header class="navbar navbar-default navbar-static-top">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="logo col-sm-2">
+            <img src="{{ urlPath }}/img/logo_100.png" alt="" />
+          </div>
+          <div class="col-sm-10 col-bottom">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" id="main-tabs" role="tablist" style="float:left">
+              <li role="presentation" class="active"><a href="#accueil" aria-controls="accueil" role="tab" data-toggle="tab">Accueil</a></li>
+              <li role="presentation"><a href="#palmares" aria-controls="palmares" role="tab" data-toggle="tab">Palmarès</a></li>
+              <li role="presentation"><a href="#historique" aria-controls="historique" role="tab" data-toggle="tab">Historique</a></li>
+              <li role="presentation"><a href="#details" aria-controls="details" role="tab" data-toggle="tab">Détails</a></li>
+			  {% if user.isAdmin %}
+			  <li role="presentation"><a href="#admin" aria-controls="details" role="tab" data-toggle="tab">Admin</a></li>
+			  {% endif %}
+            </ul>
+            <ul class="nav nav-tabs" id="right-tabs" style="float:right">
+              <li><a href="#" id="print"><span class="glyphicon glyphicon-print"></span></a></li>
+              <li><a href="#" id="send"><span class="glyphicon glyphicon-send"></span></a></li>
+              <li><a href="{{ urlPath }}/index.php/logout" id="logout"><span class="glyphicon glyphicon-off"></span></a></li>
+			  <li><a href="#" id="help"><span class="glyphicon glyphicon-question-sign"></span></a></li>
+            </ul>
+          </div>
+          <div class="col-sm-8" style="float:left">
+            <h3>Tableau de bord <small>{{ user.posteLibelle }}</small></h3>
+          </div>
+          <div class="col-sm-2" style="float:right">
+            <table class="small table table-condensed" id="datemaj">
+              <tbody>
+                <tr>
+                  <th>Date</th>
+                  <td>{{ "now"|date("d/m/Y") }}</td>
+                </tr>
+                <tr>
+                  <th>Date MAJ</th>
+                  <td>{{ date_maj |date("d/m/Y") }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-2">
+		  {% include '/filtres.html' %}
+        </div>
+        <div class="col-sm-10">
+          <div>
+
+            <!-- Tab panes -->
+            <div class="tab-content">
+              <div role="tabpanel" class="tab-pane active" id="accueil">
+
+                <div class="row">
+                  <div class="col-sm-4">
+                    <img width="100%" src="{{ urlPath }}/img/departements_de_france_map.svg" id="ajax_accueil_img" alt="" style="border: 1px solid black">
+                  </div>
+                  <div class="col-sm-8">
+                    <div class="panel panel-default">
+                      <div class="panel-heading">
+                        <h3 class="panel-title" id="ajax_accueil_tabtitle"></h3>
+                      </div>
+                      <div class="panel-body panel-table" id="ajax_accueil_table">
+                      </div>
+                    </div>
+
+                    <div class="panel panel-default">
+                      <div class="panel-heading">
+                        <h3 class="panel-title">Informations</h3>
+                      </div>
+                      <div class="panel-body">
+                        <p>
+                          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc facilisis facilisis massa, congue tristique justo convallis aliquet. Pellentesque laoreet, purus sit amet blandit fringilla, eros sapien euismod lacus, sit amet tincidunt justo libero tempus
+                          eros. Proin mattis leo arcu, et luctus lectus imperdiet et. In commodo ipsum ut aliquam malesuada. Cras dapibus volutpat velit a gravida. Integer volutpat pulvinar turpis, a sodales magna lacinia at. Praesent dignissim efficitur
+                          quam eu elementum.
+                        </p>
+                        <p>
+                          Phasellus bibendum odio erat, quis tristique ipsum porta at. Aliquam erat volutpat. Donec nulla velit, bibendum ac felis quis, malesuada commodo metus. Ut eget consequat dolor. In auctor non ex eget finibus. Proin sit amet nisi enim. Class aptent taciti
+                          sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Donec vitae nisl finibus, accumsan nunc et, vulputate nibh. Cras quis neque varius, ultrices nunc interdum, molestie odio. In vitae sollicitudin nisl.
+                        </p>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+
+              <div role="tabpanel" class="tab-pane" id="palmares">
+
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <h3 class="panel-title" id="ajax_palmares_tabtitle"></h3>
+                  </div>
+                  <div class="panel-body panel-table" id="ajax_palmares_table">
+                  </div>
+                </div>
+
+              </div>
+
+              <div role="tabpanel" class="tab-pane" id="historique">
+
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <h3 class="panel-title" id="ajax_historique_tabtitle"></h3>
+                  </div>
+                  <div class="panel-body  panel-table" id="ajax_historique_table">
+                  </div>
+                </div>
+
+              </div>
+
+              <div role="tabpanel" class="tab-pane" id="details">
+
+                <div class="row no-print">
+
+                  <div class="col-sm-4" id="ajax_details_ca">
+                  </div>
+
+                  <div class="col-sm-4" id="ajax_details_ventes">
+                  </div>
+
+                  <div class="col-sm-4" id="ajax_details_marge">
+                  </div>
+
+                </div>
+
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <h3 class="panel-title" id="ajax_details_tabtitle"></h3>
+                  </div>
+                  <div class="panel-body panel-table" id="ajax_details_table">
+                  </div>
+                </div>
+
+              </div>
+            
+			  {% if user.isAdmin %}
+			  <div role="tabpanel" class="tab-pane" id="admin">
+
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <h3 class="panel-title">Administration</h3>
+                  </div>
+                  <div class="panel-body panel-table">
+					<ul>
+						<li>Lien1</li>
+						<li>Lien2</li>
+					</ul>
+                  </div>
+                </div>
+
+              </div>		  
+			  {% endif %}
+			</div>
+
+          </div>
+        </div>
+      </div>
+      <!-- /.row -->
+    </div>
+    <!-- /.container -->
+
+  </div>
+  <!-- /#wrapper -->
+
+  <div id="ajax-spinner"><img src="{{ urlPath }}/img/ajax-spinner.svg"></div>
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+  <script src="{{ urlPath }}/js/jquery.number.js"></script>
+  <script src="{{ urlPath }}/js/jquery.tablesorter.js"></script>
+  <script src="{{ urlPath }}/js/jquery.print.js"></script>
+  <script src="{{ urlPath }}/js/bootstrap-tour.js"></script>
+  <script src="{{ urlPath }}/js/darties.js"></script>
+
+</body>
+
+</html>

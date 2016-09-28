@@ -1,0 +1,65 @@
+                    <table class="table table-bordered table-condensed table-hover table-sorter">
+                      <thead>
+                        <tr>
+                          <td rowspan="3" data-sorter="false">Famille de produit</td>
+                          <th colspan="6" data-sorter="false">{{ libelle.0 }}</th>
+                          <th colspan="6" data-sorter="false">{{ libelle.1 }}</th>
+                        </tr>
+                        <tr>
+                          <th colspan="3" data-sorter="false">{{ libelle.2 }}</th>
+                          <th colspan="3" data-sorter="false">{{ libelle.2 }} cumulé</th>
+                          <th colspan="3" data-sorter="false">{{ libelle.2 }}</th>
+                          <th colspan="3" data-sorter="false">{{ libelle.2 }} cumulé</th>
+                        </tr>
+                        <tr>
+                          <th>Réel</th>
+                          <th>Objectif</th>
+                          <th>%</th>
+                          <th>Réel</th>
+                          <th>Objectif</th>
+                          <th>%</th>
+                          <th>Réel</th>
+                          <th>Objectif</th>
+                          <th>%</th>
+                          <th>Réel</th>
+                          <th>Objectif</th>
+                          <th>%</th>
+                        </tr>
+                      </thead>
+					  <tbody>
+					    {% for var in data %}
+                        <tr>
+                          <th>{{ var.0 }}</th>
+                          <td data-mnt="{{ var.1 }}">{{ var.1 }}</td>
+                          <td data-mnt="{{ var.2 }}">{{ var.2 }}</td>
+                          <td data-op="%">{{ var.3 }}</td>
+                          <td data-mnt="{{ var.4 }}">{{ var.4 }}</td>
+                          <td data-mnt="{{ var.5 }}">{{ var.5 }}</td>
+                          <td data-op="%">{{ var.6 }}</td>
+                          <td data-mnt="{{ var.7 }}">{{ var.7 }}</td>
+                          <td data-mnt="{{ var.8 }}">{{ var.8 }}</td>
+                          <td data-op="%">{{ var.9 }}</td>
+                          <td data-mnt="{{ var.10 }}">{{ var.10 }}</td>
+                          <td data-mnt="{{ var.11 }}">{{ var.11 }}</td>
+                          <td data-op="%">{{ var.12 }}</td>
+                        </tr>
+						{% endfor %}
+                      </tbody>
+                      <tfoot>
+                        <tr>
+                          <th>Totaux</th>
+                          <td data-mnt="{{ total.1 }}">{{ total.1 }}</td>
+                          <td data-mnt="{{ total.2 }}">{{ total.2 }}</td>
+                          <td data-op="%">{{ total.3 }}</td>
+                          <td data-mnt="{{ total.4 }}">{{ total.4 }}</td>
+                          <td data-mnt="{{ total.5 }}">{{ total.5 }}</td>
+                          <td data-op="%">{{ total.6 }}</td>
+                          <td data-mnt="{{ total.7 }}">{{ total.7 }}</td>
+                          <td data-mnt="{{ total.8 }}">{{ total.8 }}</td>
+                          <td data-op="%">{{ total.9 }}</td>
+                          <td data-mnt="{{ total.10 }}">{{ total.10 }}</td>
+                          <td data-mnt="{{ total.11 }}">{{ total.11 }}</td>
+                          <td data-op="%">{{ total.12 }}</td>
+                        </tr>
+                      </tfoot>
+					</table>

@@ -1,0 +1,143 @@
+html,
+body {
+    width: 100%;
+    height: 100%;
+}
+
+.login-panel {
+  margin-top:100px;
+}
+
+.col-bottom {
+  position: absolute;
+  bottom:-1px;
+  right:0;
+}
+
+header table.table {
+  margin-bottom: 0;
+}
+
+#datemaj th, #datemaj td {
+  border:none;
+  padding-bottom: 0;
+}
+
+
+/* Tables */
+.panel .panel-body.panel-table {
+  padding: 0;
+}
+.panel .panel-body.panel-table > table {
+  margin-bottom: 0;
+}
+.table-bordered>thead>tr>td,
+.table-bordered>thead>tr>th {
+  background:#d9edf7;
+  border-bottom-width:1px;
+}
+table.table tbody,
+table.table tfoot {
+	font-size:13px;
+}
+table.table thead th {
+  text-align:center;
+}
+table.table thead td {
+  font-weight:bold;
+  text-align:left;
+}
+table.table tbody th,
+table.table tfoot th {
+  font-weight:normal;
+  text-align:left;
+}
+table.table tbody td,
+table.table tfoot td {
+  text-align:right;
+}
+table.table tfoot tr {
+  background: #F5F5F5;
+}
+table.table-sorter thead .tablesorter-header {
+	background-image: url(../img/sort/bg.gif);
+	background-repeat: no-repeat;
+	background-position: center right;
+	cursor: pointer;
+}
+table.table-sorter thead .tablesorter-header.sorter-false {
+	background-image: none;
+	cursor: auto;
+}
+table.table-sorter thead .tablesorter-header.tablesorter-headerAsc {
+  background-image: url(../img/sort/asc.gif);
+}
+table.table-sorter thead .tablesorter-header.tablesorter-headerDesc {
+  background-image: url(../img/sort/desc.gif);
+}
+
+/* Panels */
+.panel .huge {
+  font-size:250%;
+}
+.panel .panel-footer {
+  text-align: right;
+}
+
+.panel-green {
+    border-color: #5cb85c;
+}
+
+.panel-green .panel-heading {
+    border-color: #5cb85c;
+    color: #fff;
+    background-color: #5cb85c;
+}
+
+.panel-red {
+    border-color: #d9534f;
+}
+
+.panel-red .panel-heading {
+    border-color: #d9534f;
+    color: #fff;
+    background-color: #d9534f;
+}
+
+.panel-yellow {
+    border-color: #f0ad4e;
+}
+
+.panel-yellow .panel-heading {
+    border-color: #f0ad4e;
+    color: #fff;
+    background-color: #f0ad4e;
+}
+
+.panel-none {
+    border-color: #ddd;
+}
+
+.panel-none .panel-heading {
+    border-color: #ddd;
+    color: #333;
+    background-color: #FFF;
+}
+
+/* Ajax spinner */
+#ajax-spinner {
+	display: none;
+	background-color: rgba(255, 255, 255, 0.5);
+	left: 0;
+	position: absolute;
+	top: 0;
+	z-index: 1000;
+	width: 100%;
+	height: 100%;
+}
+#ajax-spinner img {
+	display: block;
+	margin-top: calc(20% - 100px);
+    margin-left: auto;
+    margin-right: auto;
+}

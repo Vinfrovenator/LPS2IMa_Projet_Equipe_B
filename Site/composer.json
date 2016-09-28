@@ -1,0 +1,16 @@
+{
+    "require": {
+	"fabpot/goutte": "1.0.7",
+	"yajra/laravel-oci8": "v1.15.0",
+	"illuminate/database": "v4.1.30",
+	"j4mie/paris": "1.5.4",
+        "slim/slim": "2.6.2",
+        "slim/views": "0.1.3",
+        "twig/twig": "1.24.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        }
+    }
+}

@@ -1,0 +1,71 @@
+          <!-- Devise -->
+          <!--<div class="form-group">
+            <label for="devise">Devise :</label>
+            <select class="form-control" id="devise">
+			  {% for value in static('Devise', 'getFiltreOptions') %}
+			  <option value="{{ value.id }}">{{ value.libelle|capitalize }}</option>
+			  {% endfor %}
+            </select>
+          </div>-->
+
+		  <!-- Region -->
+          <div class="form-group">
+            <label for="I_REGION">Zone géographique :</label>
+            <select class="form-control" id="I_REGION">
+			  {% for value in static('Region', 'getFiltreOptions') %}
+			  <option value="{{ value.id }}" class="lv{{ value.lv }}">{{ value.libelle|capitalize }}</option>
+			  {% endfor %}
+            </select>
+          </div>
+		  
+          <!-- Enseigne -->
+          <div class="form-group">
+            <label for="I_ENSEIGNE">Enseigne :</label>
+            <select class="form-control" id="I_ENSEIGNE">
+			  {% for value in static('Enseigne', 'getFiltreOptions') %}
+			  <option value="{{ value.id }}">{{ value.libelle|capitalize }}</option>
+			  {% endfor %}
+            </select>
+          </div>
+
+          <!-- Indicateur  -->
+          <div class="form-group">
+            <label for="I_INDICATEUR">Indicateur :</label>
+            <select class="form-control" id="I_INDICATEUR">
+			  {% for value in static('Indicateur', 'getFiltreOptions') %}
+			  <option value="{{ value.id }}">{{ value.libelle|capitalize }}</option>
+			  {% endfor %}
+            </select>
+          </div>
+
+          <!-- Cumul -->
+          <div class="input-group">
+            <span class="input-group-addon">
+              <input type="checkbox" id="I_CUMUL" name="I_CUMUL" value="1">
+            </span>
+            <input type="text" class="form-control" value="Cumul" readonly>
+          </div>
+          <br>
+
+          <!-- Famille  -->
+          <div class="form-group">
+            <label for="I_FAMPROD">Famille de produit :</label>
+            <select class="form-control" id="I_FAMPROD">
+			  {% for value in static('Famille_Produit', 'getFiltreOptions') %}
+			  <option value="{{ value.id }}">{{ value.libelle|capitalize }}</option>
+			  {% endfor %}
+            </select>
+          </div>
+
+          <!-- Période  -->
+          <div class="form-group">
+            <label for="I_TEMPS">Période :</label>
+            <select class="form-control" id="I_TEMPS">
+			  {% for value in static('Temps', 'getFiltreOptions') %}
+			  <option value="{{ value.key }}" class="lv{{ value.lv }}">{{ value.libelle|capitalize }}</option>
+			  {% endfor %}
+            </select>
+          </div>
+		  
+		  <!-- Reset -->
+          <input type="button" class="btn btn-warning btn-block" id="RAZ_FILTRES" value="Réinitialisation des filtres">

@@ -1,0 +1,58 @@
+En 2015, deux versions utilisées :
+
+La version avec la dim_magasin (48) en flocon (dim_enseigne, dim_departement, dim_region_commercial (5), dim_anc_region_admin (22), dim_nouv_region_admin (13) pour les alternants
+Cette version est représentée dans l'image 2015_3PSD11_GRPX_Relationnel.png
+La version avec la dim en etoile comprenant en son sein toutes les informations de dim_enseigne, dim_departement, dim_region_commercial (5), dim_anc_region_admin (22), dim_nouv_region_admin (13)
+
+La table technique FRANCE_DEPARTEMENTS permet d'attribuer au niveau de la métropole, les 98 départements (dim_departement de contient que les départements des implantations actuelles)
+Les tables techniques SECURITE (ID_MAGASIN, ID_PROFIL, ONGLET), PROFIL et UTILISATEUR rattachées à dim_magasin sont utilisé par le portail PHP et par l'univers BO ou par les programmes SAS pour gérer la sécurité dans toutes les parties de l'application (SAS ou BO, PHP) 
+Dans la tabe de faits, unité de compte est l'euro. Les tables DEVISE et COURS permet de gérer l'affichage en BO, SAS et PHP
+Le floconage est bien pratique pour l'univers  BO des alternants.
+
+La dimension Dim_magasin dispose de 4 hierarchies :
+- Magasin > Enseigne
+- Magasin > Departement > Dim commerciale
+- Magasin > Departement > Ancienne Region administrative
+- Magasin > Departement > Nouvelle Region administrative
+Eventuellement, on peur fusionner les  deux dernières en Magasin > Departement > Ancienne Region administrative > Nouvelle Region administrative
+
+Le serveur SAP WebIntelligence a été enrichi pour permettre à un script PHP ou un script javascript de se connecter au portail infoview et de retourner un jeton nécessaire à l'application OpenDocument (WebI ou DeskI) du portail infoview.
+Le serveur SAP WebIntelligence peut diffuser les images prégénérées correspondant aux régions administratives, commerciales ou magasins.
+La génération de ces images peut se faire en GeoKettle, en Talend Spatial ou en SAS 
+
+Rappel en 2015-2016 : 
+les alternants ont comme technologies PHP/HTML/CSS/JS (site a peu près fournis, à adapter), SAP Business Objects, Oracle (base déjà implantées avec les données de simulation), TALEND sur le serveur isatech accessible depuis l'extérieur
+les temps plein ont comme technologies gérées par trois serveurs uniquement visibles sur le réseau enseignement PHP/HTML/CSS/JS (site a peu près fournis, à adapter), SAS BI, Oracle (base déjà implantées avec les données de simulation, script d'adaptation en etoile), TALEND
+Les données de simulation founis leur permettent de générer les fichiers csv utilisés par talend
+Le module/profil d'administration du portail PHP est responsable : 
+- d'exécuter le script d'intialisation (fourni) de la base de données avec gestion des séquences, des clés primaires, des clés étrangères , des clés uniques candidates, des index de recherche 
+- de lancer les jobs talend en tant que web services.
+Les 3 autres modules/profils du portail PHP sont directeur commerciale, directeur d'une des 5 régions commerciale, directeur d'un des 48 magasins.
+
+Exemple de réalisations techniques des temps pleins :
+- le projet Darties-20151 : Oracle 12c, portail Apache/PHP 5.3.3 hébergé sur le serveur chelidae connecté via PDO/OCI Oracle pour générer en PHP les filtres basés sur les données relationnelles avec du code javascript pour la gestion des dépendances entre filtres. Le site PHP est basé sur une architecture MVC utilisant un modèle PARIS, l'active record au dessus de l'ORM IDIORM étendu pour supporter Oracle via PDO et le moteur de templates TWIG. L'extension cURL de PHP invoque via le web scrapper goutte les processus stockés SAS via la SAS Stored Processes Web Application et qui modifie les tableaux produits par SAS à la volée. Les Jobs Talend pour alimenter la base Oracle sont exportés en tant que web services dans une application war dérivée du moteur SOAP Apache Axis1 déployée sur un serveur d'application web tomcat hébergé sur le serveur chelidae. Les web services Talend sont invoqués via un formulaire html et ouvre une fenêtre pour afficher le résultat. 
+  La carte des régions commerciales est colorée par la proc GMAP de SAS à partir des contours des départements fournis par l'application gratuite IGN GEOFLA Départements simplifiés via les fonctions topologiques introduites dans la version 2.0 de la surcouche PostGIS du serveur PostgreSQL. La carte a été ensuite exportée en shapefile en vue de son importation sous SAS. La carte est rendue via la proc GMAP de SAS. Le placement des magasins se base sur le Répertoire Géographique des Communes édition 2015 fournis par l'IGN, aussi un fichier gratuit. Les tables avec attributs géographiques departements et rgc_2015 partagent sous PostGIS/PostgreSQL le même système de référence. Les logos des enseignes sont placés sur la carte via un dataset annotate.
+- le projet Darties-20152 : Oracle 12c, portail Apache/PHP 5.3.3 hébergé sur le serveur chelidae connecté via PDO/OCI Oracle pour générer en PHP les filtres basés sur les données relationnelles avec du code javascript pour la gestion des dépendances entre filtres. Une balise <iframe> invoque les processus stockés SAS via la SAS Stored Processes Web Application. Les Jobs Talend pour alimenter la base Oracle sont exportés en tant que web services dans une application war dérivée du moteur SOAP Apache Axis1 déployée sur un serveur d'application web tomcat hébergé sur le serveur chelidae. Les web services Talend sont invoqués via un formulaire html et ouvre une fenêtre pour afficher le résultat. 
+
+Le projet interne  essaye de marrier tous les enseignements les aspects web services sont vus dans mon cours d'architecture.
+
+Documents fournis :
+documents : les Plan Qualité Projet et les Spécifications Détaillées de 3 à 4 groupes temps pleins et un exemple de données
+logos : les logo des 3 enseignes
+shapefile pour la réalisation des cartes.
+les scripts sql de génération de la base de données Oracle avec données de simulation
+
+
+Proposition 2016-2017 :
+
+* On garde le même jeu de données darties pour la conception encadrée par BLF
+* Je gère la totalité de la réalisation des alternants en PHP/HTML/CSS/JS (site a peu près fournis, à adapter), SAP Business Objects, Oracle (base déjà implantées avec les données de simulation), TALEND. je gère les recttes et les soutenances des alternants. tu notes la conception.
+* Diminution de la période alloué à la phase de conception des temps plein pour permettre une réalisation Pentaho en gros à égalite de la periode de conception des alternants.
+* La période janvier-fevrier des temps pleins permet de faire une réalisation Oracle, Pentaho pour des utilisateurs avancés MAIS SANS PROGRAMMATION !!! Réalisation encadrée par BLF sur le serveur Isatech avec Talend 3.8 CE User Console (voire PAdiminstration Console), Saiku, Pentaho Analysis Tool, Xmla4js, Pentaho Report Designer, Pentaho Schema Workbench, Pentaho Aggregation Designer, Pentaho Design Studio, Pentaho Metadata Editor, iReport, jPalo, Pentaho Data Integrator, GeoKettle (tous ces outils sont fonctionnels sur le serveur isatech UBSBASE01 et les clients sont sur UBSRDS01). Tu gère tes recettes.
+* Je prends ton relais en MARS pour la réalisation portail PHP/HTML/CSS/JS (prog web), programmation SAS et Talend en leur fournissant un jeu de données uniformisé avec le schéma oracle. Je gère mes recettes. On participent ensemble (avec Elisabeth) à la soutenance).
+
+Pour avancer, j'aurais besoin que tu me donnes ton accord sur ces propositions.
+
+D'avance, merci.
+
+Michel

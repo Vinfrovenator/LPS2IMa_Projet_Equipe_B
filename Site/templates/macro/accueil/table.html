@@ -1,0 +1,42 @@
+<table class="table table-bordered table-condensed table-hover table-sorter">
+  <thead>
+	<tr>
+	  <td rowspan="2" data-sorter="false">Famille de produit</td>
+	  <th colspan="2" data-sorter="false">Chiffre d'affaires</th>
+	  <th colspan="2" data-sorter="false">Ventes</th>
+	  <th colspan="2" data-sorter="false">Marge brute</th>
+	</tr>
+	<tr>
+	  <th>Réel</th>
+	  <th>Objectif</th>
+	  <th>Réel</th>
+	  <th>Budget</th>
+	  <th>Réel</th>
+	  <th>Budget</th>
+	</tr>
+  </thead>
+  <tbody>
+	{% for var in data %}
+	<tr>
+	  <th>{{ var.0 }}</th>
+	  <td data-mnt="{{ var.1 }}">{{ var.1 }}</td>
+	  <td data-mnt="{{ var.2 }}">{{ var.2 }}</td>
+	  <td data-mnt="{{ var.3 }}">{{ var.3 }}</td>
+	  <td data-mnt="{{ var.4 }}">{{ var.4 }}</td>
+	  <td data-mnt="{{ var.5 }}">{{ var.5 }}</td>
+	  <td data-mnt="{{ var.6 }}">{{ var.6 }}</td>
+	</tr>
+	{% endfor %}
+  </tbody>
+  <tfoot>
+	<tr>
+	  <th>Totaux</th>
+	  <td data-mnt="{{ total.1 }}">{{ total.1 }}</td>
+	  <td data-mnt="{{ total.2 }}">{{ total.2 }}</td>
+	  <td data-mnt="{{ total.3 }}">{{ total.3 }}</td>
+	  <td data-mnt="{{ total.4 }}">{{ total.4 }}</td>
+	  <td data-mnt="{{ total.5 }}">{{ total.5 }}</td>
+	  <td data-mnt="{{ total.6 }}">{{ total.6 }}</td>
+	</tr>
+  </tfoot>
+</table>
