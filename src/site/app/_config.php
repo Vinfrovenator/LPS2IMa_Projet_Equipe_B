@@ -15,9 +15,9 @@ $slimConf = array(
 );
 
 $idiormConf = array(
-    'connection_string' => 'oci:dbname=(DESCRIPTION=(ADDRESS=(PROTOCOL=tcp)(HOST=ora12c.univ-ubs.fr)(PORT=1521))(CONNECT_DATA=(SID=ORAETUD)))',
-    'username' => 'DARTIES1',
-    'password' => 'DARTIES1',
+    'connection_string' => 'mysql:host=localhost;dbname=darties',
+    'username' => 'root',
+    'password' => '',
 	'limit_clause_style' => '',
     'caching' => false,
     'return_result_sets' => true,
