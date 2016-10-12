@@ -54,7 +54,7 @@ table.table tfoot th {
 }
 table.table tbody td,
 table.table tfoot td {
-  text-align:right;
+  text-align:left;
 }
 table.table tfoot tr {
   background: #F5F5F5;
