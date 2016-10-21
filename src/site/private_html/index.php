@@ -64,6 +64,28 @@ $app->get('/logout', function() use ($app) {
 	$app->redirect($app->urlPath.'/index.php/login');
 });
 
+$app->get('/updateUser', function() use ($app) {
+	$app->render('/layout.html');
+});
+
+$app->post('/updateUser', function() use ($app) {
+    
+    $user = User::updatePasswd($app->request->post('id'), $app->request->post('passwd'));
+    
+    $app->redirect($app->urlPath.'/index.php/updateUser');
+});
+
+$app->get('/updateProfilUser', function() use ($app) {
+	$app->render('/layout.html');
+});
+
+$app->post('/updateProfilUser', function() use ($app) {
+    
+    $user = User::updateProfil($app->request->post('id'), $app->request->post('profilSelect'));
+    
+    $app->redirect($app->urlPath.'/index.php/updateProfilUser');
+});
+
 $app->get('/test', function() use ($app) {		
 	var_dump(SASMacroHistorique::call(
 		array ( 'I_ENSEIGNE' => 0, 'I_INDICATEUR' => 0, 'I_CUMUL' => 0, 'I_FAMPROD' => 0, 'I_TEMPS' => '2015_1_2015', 'I_REGION' => 508)
