@@ -1,0 +1,40 @@
+<table class="table table-bordered table-condensed table-hover table-sorter">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Nom</th>
+            <th>Prenom</th>
+            <th>Mail</th>
+            <th>Profil</th>
+            <th>Dernière maj</th>
+            <th>Options</th>
+        </tr>
+    </thead>
+    <tbody>
+
+
+        {% for value in static('AllUser', 'getFiltreUser') %}
+        <tr>
+            <td value="{{ value.id }}">{{ value.id }}</td>
+            <td>{{ value.name }}</td>
+            <td>{{ value.surname }}</td>
+            <td>{{ value.mail }}</td>
+            {% for profil in static('Profils', 'getFiltreProfil') %}
+                {% if (value.idprofil) == (profil.idprofil) %}
+                    <td>{{ profil.libelle }}</td>
+                {% endif %}
+            {% endfor %}
+            <td>{{ value.maj }}</td>
+            <td>
+                <center>
+                    <button type="button" id="{{ value.id }}" onclick="modalPassword(this.id)" class="btn btn-warning" data-toggle="modal" data-target="#mdp{{value.id}}">Modifier</button>
+                </center>
+            </td>
+            
+            {% include '/macro/admin/modal_password.html' %}
+            
+        </tr>
+        {% endfor %}
+        
+    </tbody>
+</table>

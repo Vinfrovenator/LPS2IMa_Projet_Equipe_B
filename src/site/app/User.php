@@ -102,6 +102,22 @@ class User extends Model
 			
 		return false;
 	}
+    
+    public static function updatePasswd($id, $passwd){
+        
+        $user = ORM::for_table('utilisateur')->select('id')->find_one($id);
+        $user->set('password', $passwd);
+        $user->save();
+        
+    }
+    
+    public static function updateProfil($id, $idNewProfil){
+        
+        $user = ORM::for_table('utilisateur')->select('id')->find_one($id);
+        $user->set('id_profil', $idNewProfil);
+        $user->save();
+        
+    }
 
 
 }

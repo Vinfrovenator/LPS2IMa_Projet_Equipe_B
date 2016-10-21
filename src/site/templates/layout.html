@@ -184,37 +184,23 @@
                                         <h3 class="panel-title">Administration</h3>
                                     </div>
                                     <div class="panel-body panel-table">
-                                        <table class="table table-bordered table-condensed table-hover table-sorter">
-                                            <thead>
-                                                <tr>
-                                                    <th>Id</th>
-                                                    <th>Nom</th>
-                                                    <th>Prenom</th>
-                                                    <th>Options</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
+                                       
+                                        {% include '/macro/admin/table.html' %}
+                                       
+                                        <!-- Modal -->
+                                        <div id="modal">
+                                            
+                                        </div>
+                                        
 
-
-                                                {% for value in static('AllUser', 'getFiltreUser') %}
-                                                <tr>
-                                                    <td value="{{ value.id }}">{{ value.id }}</td>
-                                                    <td>{{ value.name }}</td>
-                                                    <td>{{ value.surname }}</td>
-                                                    <td>
-                                                        <button type="button" class="btn btn-warning">Modifier</button>
-                                                        <button type="button" class="btn btn-danger">Supprimer</button>
-                                                    </td>
-                                                </tr>
-                                                {% endfor %}
-
-                                            </tbody>
-                                        </table>
                                     </div>
                                 </div>
 
                             </div>
                             {% endif %}
+
+
+
                         </div>
 
                     </div>
