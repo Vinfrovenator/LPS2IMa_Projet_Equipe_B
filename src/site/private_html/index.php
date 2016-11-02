@@ -34,7 +34,7 @@ $app->user = User::loadFromCookie();
 // Route
 $app->get('/', function() use ($app) {
 
-	$date_maj = ORM::for_table('FAITS_VENTES')->max('DATE_MAJ');
+	$date_maj = ORM::for_table('faits_ventes')->max('date_maj');
 	if (User::isLogged()) {
 		$app->render('/layout.html', array('date_maj' => $date_maj));
 	}
