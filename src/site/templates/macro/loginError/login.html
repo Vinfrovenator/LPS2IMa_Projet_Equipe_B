@@ -45,7 +45,12 @@
 			  <li>Region|angelique.delaunay@darties.com|g6Gb25T</li>
 			  <li>Magasin|estelle.bernier@darties.com|CJ62hy9</li>
 			</ul>
-          </div>
+            {% if error == "mdpForget" %}
+                <p style="color:red; text-align:center; font-weight: bold;"><a href="{{ urlPath }}/index.php/formMotDePasse">Mot de passe oublié?</a></p>
+            {% else %}
+                <p style="color:green; text-align:center; font-weight: bold;">Un lien de récupération vous a été envoyé!</p>
+            {% endif %}  
+            </div>
         </div>
       </div>
     </div>

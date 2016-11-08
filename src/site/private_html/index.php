@@ -47,6 +47,43 @@ $app->get('/login', function() use ($app) {
 	$app->render('/login.html');
 });
 
+//Permet de rediriger l'utilisateur en cas de mauvaise identification
+//Propose mot de passe oublié
+$app->get('/loginError', function() use ($app) {
+	$app->render('/macro/loginError/login.html', ['error' => "mdpForget"]);
+});
+
+$app->get('/formMotDePasse', function() use ($app) {
+	$app->render('/macro/loginError/formMotDePasse.html');
+});
+
+//Permet l'envoie d'un mail à l'utilisateur afin qu'il
+//renouvelle son mot de passe
+$app->post('/newPassword', function() use ($app) {
+    $user = User::valideMail($app->request->post('email'));
+    if (is_object($user)) {
+		//Envoie d'un mail
+        //
+        //
+        //
+        //
+        $app->redirect($app->urlPath.'/index.php/loginSent');
+	}else{
+        $app->redirect($app->urlPath.'/index.php/falseMail');
+    }
+    
+});
+
+//Page de connexion indiquant que le mail est invalide
+$app->get('/falseMail', function() use ($app) {
+	$app->render('/macro/loginError/formMotDePasse.html', ['error' => "NoMail"]);
+});
+
+//Page de connexion indiquant que le mail a été envoyé 
+$app->get('/loginSent', function() use ($app) {
+	$app->render('/macro/loginError/login.html', ['error' => "mail"]);
+});
+
 $app->post('/login', function() use ($app) {
 	$user = User::login($app->request->post('email'), $app->request->post('mdp'));
 	
@@ -54,7 +91,7 @@ $app->post('/login', function() use ($app) {
 		$app->redirect($app->urlPath.'/');
 	}
 	else {
-		$app->redirect($app->urlPath.'/index.php/login');
+		$app->redirect($app->urlPath.'/index.php/loginError');
 	}
 });
 

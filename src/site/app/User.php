@@ -73,6 +73,12 @@ class User extends Model
 		// CJ62hy9
 		//SELECT * FROM UTILISATEUR U LEFT JOIN PROFIL P ON U.ID_PROFIL = P.ID_PROFIL WHERE LOWER(U.MAIL) = 'estelle.bernier@darties.com' AND U.PASSWORD = 'CJ62hy9';
 	}
+    
+    public static function valideMail($email) {
+        $user = User::where('LOWER(MAIL)', strtolower(trim($email)))
+            ->find_one();
+        return $user;
+    }
 	
 	
 	public static function logout() {
