@@ -30,7 +30,7 @@ foreach($urlPath as $value) {
 }
 
 $app->user = User::loadFromCookie();
-	
+
 // Route
 $app->get('/', function() use ($app) {
 
@@ -71,7 +71,7 @@ $app->post('/newPassword', function() use ($app) {
 	}else{
         $app->redirect($app->urlPath.'/index.php/falseMail');
     }
-    
+
 });
 
 //Page de connexion indiquant que le mail est invalide
@@ -79,14 +79,14 @@ $app->get('/falseMail', function() use ($app) {
 	$app->render('/macro/loginError/formMotDePasse.html', ['error' => "NoMail"]);
 });
 
-//Page de connexion indiquant que le mail a été envoyé 
+//Page de connexion indiquant que le mail a été envoyé
 $app->get('/loginSent', function() use ($app) {
 	$app->render('/macro/loginError/login.html', ['error' => "mail"]);
 });
 
 $app->post('/login', function() use ($app) {
 	$user = User::login($app->request->post('email'), $app->request->post('mdp'));
-	
+
 	if (is_object($user)) {
 		$app->redirect($app->urlPath.'/');
 	}
@@ -106,9 +106,9 @@ $app->get('/updateUser', function() use ($app) {
 });
 
 $app->post('/updateUser', function() use ($app) {
-    
+
     $user = User::updatePasswd($app->request->post('id'), $app->request->post('passwd'));
-    
+
     $app->redirect($app->urlPath.'/index.php/updateUser');
 });
 
@@ -117,13 +117,13 @@ $app->get('/updateProfilUser', function() use ($app) {
 });
 
 $app->post('/updateProfilUser', function() use ($app) {
-    
+
     $user = User::updateProfil($app->request->post('id'), $app->request->post('profilSelect'));
-    
+
     $app->redirect($app->urlPath.'/index.php/updateProfilUser');
 });
 
-$app->get('/test', function() use ($app) {		
+$app->get('/test', function() use ($app) {
 	var_dump(SASMacroHistorique::call(
 		array ( 'I_ENSEIGNE' => 0, 'I_INDICATEUR' => 0, 'I_CUMUL' => 0, 'I_FAMPROD' => 0, 'I_TEMPS' => '2015_1_2015', 'I_REGION' => 508)
 	));
@@ -133,26 +133,26 @@ $app->group('/ajax', function() use ($app) {
 	$app->response->headers->set('Cache-Control', 'no-cache, no-store, must-revalidate');
 	$app->response->headers->set('Pragma', 'no-cache');
 	$app->response->headers->set('Expires', '0');
-	
+
 	$app->group('/tab', function() use ($app) {
 
-		$app->post('/accueil', function() use ($app) {
+    $app->post('/accueil', function() use ($app) {
 			//echo json_encode(array('ajax_accueil_table' => print_r($app->request->post(), true)));
-			echo SASMacroAccueil::call($app->request->post());
+			echo json_encode(SQLMacroAccueil::call($app->request->post()));
 		});
 
 		$app->post('/historique', function() use ($app) {
-			echo SASMacroHistorique::call($app->request->post());
-		});	
-		
+			echo json_encode(SQLMacroHistorique::call($app->request->post()));
+		});
+
 		$app->post('/palmares', function() use ($app) {
 			echo SASMacroPalmares::call($app->request->post());
-		});		
-	
+		});
+
 		$app->post('/details', function() use ($app) {
 			echo SASMacroDetails::call($app->request->post());
 		});
-		
+
 	});
 });
 

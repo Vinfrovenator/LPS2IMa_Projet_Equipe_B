@@ -18,25 +18,16 @@
   <tbody>
 	{% for var in data %}
 	<tr>
-	  <th>{{ var.0 }}</th>
-	  <td data-mnt="{{ var.1 }}">{{ var.1 }}</td>
-	  <td data-mnt="{{ var.2 }}">{{ var.2 }}</td>
-	  <td data-mnt="{{ var.3 }}">{{ var.3 }}</td>
-	  <td data-mnt="{{ var.4 }}">{{ var.4 }}</td>
-	  <td data-mnt="{{ var.5 }}">{{ var.5 }}</td>
-	  <td data-mnt="{{ var.6 }}">{{ var.6 }}</td>
+	  <th>{{ var.lib_famille_produit }}</th>
+	  <td data-mnt="{{ var.CA_Reel }}">{{ var.CA_Reel }}</td>
+	  <td data-mnt="{{ var.CA_Objectif }}">{{ var.CA_Objectif }}</td>
+	  <td data-mnt="{{ var.Ventes_Reel }}">{{ var.Ventes_Reel }}</td>
+	  <td data-mnt="{{ var.Ventes_Objectif }}">{{ var.Ventes_Objectif }}</td>
+	  <td data-mnt="{{ var.Marge_Reel }}">{{ var.Marge_Reel }}</td>
+	  <td data-mnt="{{ var.Marge_Objectif }}">{{ var.Marge_Objectif }}</td>
 	</tr>
 	{% endfor %}
   </tbody>
   <tfoot>
-	<tr>
-	  <th>Totaux</th>
-	  <td data-mnt="{{ total.1 }}">{{ total.1 }}</td>
-	  <td data-mnt="{{ total.2 }}">{{ total.2 }}</td>
-	  <td data-mnt="{{ total.3 }}">{{ total.3 }}</td>
-	  <td data-mnt="{{ total.4 }}">{{ total.4 }}</td>
-	  <td data-mnt="{{ total.5 }}">{{ total.5 }}</td>
-	  <td data-mnt="{{ total.6 }}">{{ total.6 }}</td>
-	</tr>
   </tfoot>
 </table>
