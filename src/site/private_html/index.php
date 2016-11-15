@@ -36,7 +36,15 @@ $app->get('/', function() use ($app) {
 
 	$date_maj = ORM::for_table('faits_ventes')->max('date_maj');
 	if (User::isLogged()) {
-		$app->render('/layout.html', array('date_maj' => $date_maj));
+		$email = User::getMAIL();
+		$nom = User::getNOM();
+		$prenom = User::getPRENOM();
+		$id = User::getID();
+		$username = User::getUSERNAME();
+		$profil = User::getID_PROFIL();
+		$date = User::getDATEMAJ_USER();
+		$password = User::getPASSWORD();
+		$app->render('/layout.html', array('date_maj' => $date_maj, 'email' => $email, 'password' => $password, 'nom' => $nom, 'prenom' => $prenom, 'id' => $id, 'username' => $username, 'profil' => $profil, 'date' => $date));
 	}
 	else {
 		$app->redirect($app->urlPath.'/index.php/login');

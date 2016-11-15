@@ -60,9 +60,14 @@ class User extends Model
 
 		if (is_object($user)) {
 			$app = App::getInstance();
-			
 			$app->setCookie('USER_ID', $user->ID, '1 days');
 			$app->setCookie('USER_MDP', md5($user->PASSWORD), '1 days');
+			$app->setCookie('USER_NOM', $user->NOM, '1 days');
+			$app->setCookie('USER_PRENOM', $user->PRENOM, '1 days');
+			$app->setCookie('USER_USERNAME', $user->USERNAME, '1 days');
+			$app->setCookie('USER_MAIL', $user->MAIL, '1 days');
+			$app->setCookie('USER_ID_PROFIL', $user->ID_PROFIL, '1 days');
+			$app->setCookie('USER_DATEMAJ_USER', $user->DATEMAJ_USER, '1 days');
 			
 			static::$instance=$user;
 			return $user;
@@ -85,7 +90,13 @@ class User extends Model
 		$app = App::getInstance();
 					
 		$app->setCookie('USER_ID', '', '-1 days');
+		$app->setCookie('USER_NOM', '', '-1 days');
+		$app->setcookie('USER_PRENOM', '', '-1 days');
+		$app->setCookie('USER_USERNAME', '', '-1 days');
 		$app->setCookie('USER_MDP', '', '-1 days');
+		$app->setCookie('USER_MAIL', '', '-1 days');
+		$app->setCookie('USER_ID_PROFIL', '', '-1 days');
+		$app->setCookie('USER_DATEMAJ_USER', '', '-1 days');
 	}
 	
 	
@@ -124,6 +135,54 @@ class User extends Model
         $user->save();
         
     }
+
+     public static function getID() {
+		$app = App::getInstance();
+		
+		return $app->getCookie('USER_ID');
+	}
+
+	public static function getNOM() {
+		$app = App::getInstance();
+		
+		return $app->getCookie('USER_NOM');
+	}
+
+	public static function getPRENOM() {
+		$app = App::getInstance();
+		
+		return $app->getCookie('USER_PRENOM');
+	}
+
+	public static function getUSERNAME() {
+		$app = App::getInstance();
+		
+		return $app->getCookie('USER_USERNAME');
+	}
+
+	public static function getPASSWORD() {
+		$app = App::getInstance();
+		
+		return $app->getCookie('USER_MDP');
+	}
+
+	public static function getMAIL() {
+		$app = App::getInstance();
+		
+		return $app->getCookie('USER_MAIL');
+	}
+
+	public static function getID_PROFIL() {
+		$app = App::getInstance();
+		
+		return $app->getCookie('USER_ID_PROFIL');
+	}
+
+	public static function getDATEMAJ_USER() {
+		$app = App::getInstance();
+		
+		return $app->getCookie('USER_DATEMAJ_USER');
+	}
 
 
 }
