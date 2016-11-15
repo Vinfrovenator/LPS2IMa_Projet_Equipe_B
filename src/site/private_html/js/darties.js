@@ -163,3 +163,19 @@ function getFiltresData($) {
 		'I_REGION' 	  : $('#I_REGION').val(),
 	};
 }
+
+/*
+* Function activated when button show password is being pressed
+*/
+function toggleText(id){
+    var inputPasswd = document.getElementById("inputPasswd"+id);
+    inputPasswd.type = "text";
+}
+   
+/*
+* Function activated when button show password is being released
+*/
+function togglePasswd(id){
+    var inputPasswd = document.getElementById("inputPasswd"+id);
+    inputPasswd.type = "password"; 
+}
