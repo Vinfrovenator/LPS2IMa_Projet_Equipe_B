@@ -146,11 +146,11 @@ $app->group('/ajax', function() use ($app) {
 
     $app->post('/accueil', function() use ($app) {
 			//echo json_encode(array('ajax_accueil_table' => print_r($app->request->post(), true)));
-			echo json_encode(SQLMacroAccueil::call($app->request->post()));
+			//echo json_encode(SQLMacroAccueil::call($app->request->post()));
 		});
 
 		$app->post('/historique', function() use ($app) {
-			echo json_encode(SQLMacroHistorique::call($app->request->post()));
+			//echo json_encode(SQLMacroHistorique::call($app->request->post()));
 		});
 
 		$app->post('/palmares', function() use ($app) {
@@ -163,6 +163,32 @@ $app->group('/ajax', function() use ($app) {
 
 	});
 });
+
+$app->post('/connection', function() use ($app) {
+
+    $token = Token::connect($app->request->post('email'), $app->request->post('mdp'));
+    
+    if (is_object($token)) {
+        var_dump($token);
+        echo $_SESSION['USER_NOM'];
+		return json_encode($token, 201);
+	}
+	else {
+		echo "Identifiant incorrect!";
+	}
+    
+    
+});
+
+$app->put('/update/:token', function ($token, Request $request) use ($app) {
+    session_start();
+
+    $token = Token::updatePasswd($_SESSION['token'], $app->request->post('passwd'));
+    
+    return $app->json('No Content', 204);  // 204 = No content
+    
+});
+
 
 // Run app
 $app->run();
