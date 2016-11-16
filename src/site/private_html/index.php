@@ -192,7 +192,7 @@ $app->post('/update', function () use ($app) {
     session_start();
     
     $update = Token::updatePasswd($_SESSION['TOKEN'], $app->request->post('password'));
-    $token = Token::getToken();
+    $token = Token::getUser();
     if (is_object($token)) {
         echo "New password of ".$_SESSION['USER_PRENOM']." ".$_SESSION['USER_NOM']." is now : ".$_SESSION['USER_MDP']."<br>";
         //var_dump($token);
@@ -208,7 +208,7 @@ $app->get('/getuser', function () use ($app) {
     session_start();
     
     $token = Token::getUser($_SESSION['TOKEN']);
-    //var_dump($token);
+    var_dump($token);
     echo json_encode($token, 201);
     
     
@@ -219,11 +219,32 @@ $app->get('/getprofil', function () use ($app) {
     session_start();
     
     $token = Token::getProfil($_SESSION['TOKEN']);
-    //var_dump($token);
+    var_dump($token);
     echo json_encode($token, 201);
     
+});
+
+$app->get('/getselect_temps', function () use ($app) {
+    
+    session_start();
+    $temps = array();
+    $temps = Token::getSelect_temps($_SESSION['TOKEN']);
+    var_dump($temps);
+    echo json_encode($temps, 201);
     
 });
+
+$app->get('/getTableauAcceuilDM', function () use ($app) {
+    
+    session_start();
+    
+    $tableau = Token::getTableauAccueilDM($_SESSION['TOKEN']);
+    var_dump($tableau);
+    //echo json_encode($tableau, 201);
+    
+});
+
+
 
 
 // Run app

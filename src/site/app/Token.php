@@ -66,33 +66,56 @@ class Token extends Model
     public static function getUser($token){
         
         if($_SESSION['TOKEN'] == $token){
-            return $_SESSION['USER_ID'];
+            $user = User::where('LOWER(MAIL)', strtolower(trim($_SESSION['USER_MAIL'])))
+			->where('PASSWORD', $_SESSION['USER_MDP'])
+			->find_one();
+            if (is_object($user)) {
+                return $user;
+            }
+
+            return false;
         }
-        
+    
     }
     
     public static function getProfil($token){
         
         if($_SESSION['TOKEN'] == $token){
-            return $_SESSION['USER_ID_PROFIL'];
+            $profil = Profil::where('ID_PROFIL', $_SESSION['USER_ID_PROFIL'])->find_one();
+            return $profil;
         }
         
     }
     
-    public static function getTableauAccueilDM($token, $code_select_temps, $code_select_cumul, $code_select_indicateur){
+    public static function getSelect_temps($token){
+        if($_SESSION['TOKEN'] == $token){
+            ORM::configure('return_result_sets', true);
+            $temps = ORM::for_table('select_temps')->find_many();
+            echo $temps;
+            return $temps;
+        }
+    }
+    
+    public static function getTableauAccueilDM($token/*, $code_select_temps, $code_select_cumul, $code_select_indicateur*/){
         
         if($_SESSION['TOKEN'] == $token){
-            $params['I_DEVISE'] = 0;
-            $app = App::getInstance();
-            $id = '1';
-            $db = ORM::get_db();
-
-            $enseigne = $params['I_ENSEIGNE'];
-            $temps = $params['I_TEMPS'];
-            $geo = $params['I_REGION'];
-            echo $enseigne;
-            echo $temps;
-            echo $geo;
+            
+            $profil = Profil::where('ID_PROFIL', $_SESSION['USER_ID_PROFIL'])->find_one();
+            
+            foreach($profil as $record){
+                $code_select_zone_geo = explode(" ", $record->LIB_PROFIL)[1];
+                $id_zone = $record->ID_ZONE;
+            }
+            
+            $code_select_devise=1;
+            
+            $code_select_cours=1;
+            
+            $enseigne = ORM::for_table('dim_magasin_star')->where('ID_MAGASIN', $id_zone)->find_one();
+            $code_select_enseigne = $enseigne->LIB_ENSEIGNE;
+            echo $code_select_enseigne;
+            
+            
         }
         
     }
