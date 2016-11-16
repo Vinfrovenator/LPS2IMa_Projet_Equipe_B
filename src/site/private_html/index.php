@@ -164,28 +164,64 @@ $app->group('/ajax', function() use ($app) {
 	});
 });
 
+$app->get('/loginwebservice', function() use ($app) {
+	$app->render('/macro/testwebservice/login.html');
+});
+
+$app->get('/newpassword', function() use ($app) {
+	$app->render('/macro/testwebservice/newpasswordform.html');
+});
+
 $app->post('/connection', function() use ($app) {
 
     $token = Token::connect($app->request->post('email'), $app->request->post('mdp'));
     
     if (is_object($token)) {
-        var_dump($token);
-        echo $_SESSION['USER_NOM'];
-		return json_encode($token, 201);
-	}
-	else {
+        echo "Connection de ".$_SESSION['USER_PRENOM']." ".$_SESSION['USER_NOM']."<br>";
+        //var_dump($token);
+		echo json_encode($token, 201);
+	}else {
 		echo "Identifiant incorrect!";
 	}
     
     
 });
 
-$app->put('/update/:token', function ($token, Request $request) use ($app) {
-    session_start();
-
-    $token = Token::updatePasswd($_SESSION['token'], $app->request->post('passwd'));
+$app->post('/update', function () use ($app) {
     
-    return $app->json('No Content', 204);  // 204 = No content
+    session_start();
+    
+    $update = Token::updatePasswd($_SESSION['TOKEN'], $app->request->post('password'));
+    $token = Token::getToken();
+    if (is_object($token)) {
+        echo "New password of ".$_SESSION['USER_PRENOM']." ".$_SESSION['USER_NOM']." is now : ".$_SESSION['USER_MDP']."<br>";
+        //var_dump($token);
+        echo json_encode($token, 201);
+    }else {
+		echo "Identifiant incorrect!";
+	}
+    
+});
+
+$app->get('/getuser', function () use ($app) {
+    
+    session_start();
+    
+    $token = Token::getUser($_SESSION['TOKEN']);
+    //var_dump($token);
+    echo json_encode($token, 201);
+    
+    
+});
+
+$app->get('/getprofil', function () use ($app) {
+    
+    session_start();
+    
+    $token = Token::getProfil($_SESSION['TOKEN']);
+    //var_dump($token);
+    echo json_encode($token, 201);
+    
     
 });
 

@@ -39,13 +39,26 @@ class Token extends Model
 		return false;
     }
     
+    public static function getToken(){
+        $user = User::where('LOWER(MAIL)', strtolower(trim($_SESSION['USER_MAIL'])))
+			->where('PASSWORD', $_SESSION['USER_MDP'])
+			->find_one();
+        if (is_object($user)) {
+            return $user;
+        }
+        
+        return false;
+    }
+    
     
     public static function updatePasswd($token, $passwd){
         
         if($_SESSION['TOKEN'] == $token){
+            $_SESSION['USER_MDP'] = $passwd;
             $user = ORM::for_table('utilisateur')->select('id')->find_one($_SESSION['USER_ID']);
             $user->set('password', $passwd);
             $user->save();
+            
         }
         
     }
@@ -62,6 +75,24 @@ class Token extends Model
         
         if($_SESSION['TOKEN'] == $token){
             return $_SESSION['USER_ID_PROFIL'];
+        }
+        
+    }
+    
+    public static function getTableauAccueilDM($token, $code_select_temps, $code_select_cumul, $code_select_indicateur){
+        
+        if($_SESSION['TOKEN'] == $token){
+            $params['I_DEVISE'] = 0;
+            $app = App::getInstance();
+            $id = '1';
+            $db = ORM::get_db();
+
+            $enseigne = $params['I_ENSEIGNE'];
+            $temps = $params['I_TEMPS'];
+            $geo = $params['I_REGION'];
+            echo $enseigne;
+            echo $temps;
+            echo $geo;
         }
         
     }
