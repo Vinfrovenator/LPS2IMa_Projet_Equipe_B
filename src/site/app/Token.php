@@ -39,18 +39,6 @@ class Token extends Model
 		return false;
     }
     
-    public static function getToken(){
-        $user = User::where('LOWER(MAIL)', strtolower(trim($_SESSION['USER_MAIL'])))
-			->where('PASSWORD', $_SESSION['USER_MDP'])
-			->find_one();
-        if (is_object($user)) {
-            return $user;
-        }
-        
-        return false;
-    }
-    
-    
     public static function updatePasswd($token, $passwd){
         
         if($_SESSION['TOKEN'] == $token){
@@ -90,9 +78,13 @@ class Token extends Model
     public static function getSelect_temps($token){
         if($_SESSION['TOKEN'] == $token){
             ORM::configure('return_result_sets', true);
-            $temps = ORM::for_table('select_temps')->find_many();
-            echo $temps;
-            return $temps;
+            $stack = array();
+            $select_temps = ORM::for_table('select_temps')->find_many();
+            $select_cumul = ORM::for_table('select_cumul')->find_many();
+            $select_famille_produit = ORM::for_table('select_famille_produit')->find_many();
+            $select_indicateur = ORM::for_table('select_indicateur')->find_many();
+            array_push($stack, $select_temps, $select_cumul, $select_famille_produit, $select_indicateur);
+            return $stack; 
         }
     }
     
