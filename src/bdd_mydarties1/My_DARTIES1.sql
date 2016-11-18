@@ -1341,6 +1341,7 @@ INSERT INTO `profil` (`ID_PROFIL`, `LIB_PROFIL`, `TYPE_ZONE`, `ID_ZONE`, `USERNA
 (53, 'Directeur Valence', 2, 46, 'etudiant53', 'P@ssw0rd', '2016-03-25 10:20:54'),
 (54, 'Directeur Valenciennes', 2, 47, 'etudiant54', 'P@ssw0rd', '2016-03-25 10:20:54'),
 (55, 'Directeur Versailles', 2, 48, 'etudiant55', 'P@ssw0rd', '2016-03-25 10:20:54');
+(56, 'Profil temporaire', 2, 49, 'etudiant55', 'P@ssw0rd', '2016-03-25 10:20:54');
 
 INSERT INTO `securite` (`ID_MAGASIN`, `ID_PROFIL`, `ONGLET`, `DATEMAJ_SECURITE`) VALUES
 (1, 1, 1, '2016-03-25 10:20:54'),
