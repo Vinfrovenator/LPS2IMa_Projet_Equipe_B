@@ -146,11 +146,11 @@ $app->group('/ajax', function() use ($app) {
 
     $app->post('/accueil', function() use ($app) {
 			//echo json_encode(array('ajax_accueil_table' => print_r($app->request->post(), true)));
-			//echo json_encode(SQLMacroAccueil::call($app->request->post()));
+			echo json_encode(SQLMacroAccueil::call($app->request->post()));
 		});
 
 		$app->post('/historique', function() use ($app) {
-			//echo json_encode(SQLMacroHistorique::call($app->request->post()));
+			echo json_encode(SQLMacroHistorique::call($app->request->post()));
 		});
 
 		$app->post('/palmares', function() use ($app) {
@@ -175,7 +175,7 @@ $app->get('/newpassword', function() use ($app) {
 $app->post('/connection', function() use ($app) {
 
     $token = Token::connect($app->request->post('email'), $app->request->post('mdp'));
-    
+
     if (is_object($token)) {
         echo "Connection de ".$_SESSION['USER_PRENOM']." ".$_SESSION['USER_NOM']."<br>";
         //var_dump($token);
@@ -183,14 +183,14 @@ $app->post('/connection', function() use ($app) {
 	}else {
 		echo "Identifiant incorrect!";
 	}
-    
-    
+
+
 });
 
 $app->post('/update', function () use ($app) {
-    
+
     session_start();
-    
+
     $update = Token::updatePasswd($_SESSION['TOKEN'], $app->request->post('password'));
     $token = Token::getUser();
     if (is_object($token)) {
@@ -200,48 +200,48 @@ $app->post('/update', function () use ($app) {
     }else {
 		echo "Identifiant incorrect!";
 	}
-    
+
 });
 
 $app->get('/getuser', function () use ($app) {
-    
+
     session_start();
-    
+
     $token = Token::getUser($_SESSION['TOKEN']);
     var_dump($token);
     echo json_encode($token, 201);
-    
-    
+
+
 });
 
 $app->get('/getprofil', function () use ($app) {
-    
+
     session_start();
-    
+
     $token = Token::getProfil($_SESSION['TOKEN']);
     var_dump($token);
     echo json_encode($token, 201);
-    
+
 });
 
 $app->get('/getselect_temps', function () use ($app) {
-    
+
     session_start();
     $temps = array();
     $temps = Token::getSelect_temps($_SESSION['TOKEN']);
     var_dump($temps);
     echo json_encode($temps, 201);
-    
+
 });
 
 $app->get('/getTableauAcceuilDM', function () use ($app) {
-    
+
     session_start();
-    
+
     $tableau = Token::getTableauAccueilDM($_SESSION['TOKEN']);
     var_dump($tableau);
     //echo json_encode($tableau, 201);
-    
+
 });
 
 
