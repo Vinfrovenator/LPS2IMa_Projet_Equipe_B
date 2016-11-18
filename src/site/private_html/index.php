@@ -5,6 +5,7 @@ namespace App;
 define('_', dirname(__DIR__));
 require _.'/vendor/autoload.php';
 require _.'/app/_config.php';
+require _.'/private_html/FunctionsWS.php';
 
 date_default_timezone_set('Europe/Paris');
 
@@ -174,7 +175,7 @@ $app->get('/newpassword', function() use ($app) {
 
 $app->post('/connection', function() use ($app) {
 
-    $token = Token::connect($app->request->post('email'), $app->request->post('mdp'));
+    $token = FunctionsWS::connect($app->request->post('email'), $app->request->post('mdp'));
 
     if (is_object($token)) {
         echo "Connection de ".$_SESSION['USER_PRENOM']." ".$_SESSION['USER_NOM']."<br>";
@@ -191,8 +192,8 @@ $app->post('/update', function () use ($app) {
 
     session_start();
 
-    $update = Token::updatePasswd($_SESSION['TOKEN'], $app->request->post('password'));
-    $token = Token::getUser();
+    $update = FunctionsWS::updatePasswd($_SESSION['TOKEN'], $app->request->post('password'));
+    $token = FunctionsWS::getUser();
     if (is_object($token)) {
         echo "New password of ".$_SESSION['USER_PRENOM']." ".$_SESSION['USER_NOM']." is now : ".$_SESSION['USER_MDP']."<br>";
         //var_dump($token);
@@ -207,10 +208,9 @@ $app->get('/getuser', function () use ($app) {
 
     session_start();
 
-    $token = Token::getUser($_SESSION['TOKEN']);
+    $token = FunctionsWS::getUser($_SESSION['TOKEN']);
     var_dump($token);
     echo json_encode($token, 201);
-
 
 });
 
@@ -228,7 +228,7 @@ $app->get('/getselect_temps', function () use ($app) {
 
     session_start();
     $temps = array();
-    $temps = Token::getSelect_temps($_SESSION['TOKEN']);
+    $temps = FunctionsWS::getSelect_temps($_SESSION['TOKEN']);
     var_dump($temps);
     echo json_encode($temps, 201);
 
@@ -238,14 +238,11 @@ $app->get('/getTableauAcceuilDM', function () use ($app) {
 
     session_start();
 
-    $tableau = Token::getTableauAccueilDM($_SESSION['TOKEN']);
+    $tableau = FunctionsWS::getTableauAccueilDM($_SESSION['TOKEN']);
     var_dump($tableau);
     //echo json_encode($tableau, 201);
 
 });
-
-
-
 
 // Run app
 $app->run();
