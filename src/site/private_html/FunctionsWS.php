@@ -30,7 +30,9 @@ class FunctionsWS extends Model {
       }
 
       $_SESSION['TOKEN'] = $string;
-      return $user;
+       
+      return true;
+        
     }
     return false;
   }
@@ -45,6 +47,7 @@ class FunctionsWS extends Model {
   }
 
   public static function getUser($token){
+    session_start();
     if($_SESSION['TOKEN'] == $token){
       $user = User::where('LOWER(MAIL)', strtolower(trim($_SESSION['USER_MAIL'])))
       ->where('PASSWORD', $_SESSION['USER_MDP'])
@@ -57,8 +60,13 @@ class FunctionsWS extends Model {
   }
 
   public static function getProfil($token){
+    session_start();
     if($_SESSION['TOKEN'] == $token){
       $profil = Profil::where('ID_PROFIL', $_SESSION['USER_ID_PROFIL'])->find_one();
+  
+      $_SESSION['LIB_PROFIL'] = $profil->LIB_PROFIL;
+      $_SESSION['TYPE_ZONE'] = $profil->TYPE_ZONE;
+      
       return $profil;
     }
   }
