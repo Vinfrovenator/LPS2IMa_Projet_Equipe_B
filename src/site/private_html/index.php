@@ -211,9 +211,11 @@ $app->post('/connection', function() use ($app) {
 
 $app->post('/update', function () use ($app) {
 
-    session_start();
+    $password = $app->request->post('password');
 
-    $update = FunctionsWS::updatePasswd($_SESSION['TOKEN'], $app->request->post('password'));
+    $response = array();
+    
+    $update = FunctionsWS::updatePasswd($_SESSION['TOKEN'], $password);
     $token = FunctionsWS::getUser();
     if (is_object($token)) {
         echo "New password of ".$_SESSION['USER_PRENOM']." ".$_SESSION['USER_NOM']." is now : ".$_SESSION['USER_MDP']."<br>";
