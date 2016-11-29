@@ -217,11 +217,26 @@ $app->post('/update', function () use ($app) {
     $token = FunctionsWS::getUser();
     if (is_object($token)) {
         echo "New password of ".$_SESSION['USER_PRENOM']." ".$_SESSION['USER_NOM']." is now : ".$_SESSION['USER_MDP']."<br>";
-        //var_dump($token);
-        echo json_encode($token, 201);
+        $response["success"] = true;
+        $response["id"] = $_SESSION['USER_ID'];
+        $response["password"] = $_SESSION['USER_MDP'];
+        $response["name"] = $_SESSION['USER_NOM'];
+        $response["surname"] = $_SESSION['USER_PRENOM'];
+        $response["user_surname"] = $_SESSION['USER_USERNAME'];
+        $response["mail"] = $_SESSION['USER_MAIL'];
+        $response["profil"] = $_SESSION['USER_ID_PROFIL'];
+        $response["date_maj"] = $_SESSION['USER_DATEMAJ_USER'];
+        $response["token"] = $_SESSION['TOKEN'];
+        $response["lib_profil"] = $profil->LIB_PROFIL;;
+        $response["type_profil"] = $profil->TYPE_ZONE;
     }else {
-		echo "Identifiant incorrect!";
+		$response["success"] = false;
+        $response["message"] = "Something went wrong";
+        
 	}
+    
+    echo json_encode($response, 200);
+
 
 });
 
