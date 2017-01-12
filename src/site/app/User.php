@@ -97,6 +97,8 @@ class User extends Model
 		$app->setCookie('USER_MAIL', '', '-1 days');
 		$app->setCookie('USER_ID_PROFIL', '', '-1 days');
 		$app->setCookie('USER_DATEMAJ_USER', '', '-1 days');
+        $app->setCookie('TOKEN', '', '-1 days');
+        $app->setCookie('TIMESTAMP', '', '-1 days');
 	}
 	
 	
@@ -183,6 +185,18 @@ class User extends Model
 		
 		return $app->getCookie('USER_DATEMAJ_USER');
 	}
+    
+    public static function getTOKEN() {
+		$app = App::getInstance();
+		
+		return $app->getCookie('TOKEN');
+	}
+    
+    public static function getTIMESTAMP(){
+        $app = App::getInstance();
+		
+		return $app->getCookie('TIMESTAMP');
+    }
 
 
 }

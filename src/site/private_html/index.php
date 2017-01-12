@@ -1,6 +1,7 @@
 <?php
-
 namespace App;
+
+session_start();
 
 define('_', dirname(__DIR__));
 require _.'/vendor/autoload.php';
@@ -175,38 +176,63 @@ $app->get('/newpassword', function() use ($app) {
 
 $app->post('/connection', function() use ($app) {
 
-    $token = FunctionsWS::connect($app->request->post('email'), $app->request->post('mdp'));
+    //Reading post params
+    $email = $app->request->post('email');
+    $password = $app->request->post('mdp');
+    
+    $response = array();
+    
+    $token = FunctionsWS::connect($email, $password);
 
-    if (is_object($token)) {
-        echo "Connection de ".$_SESSION['USER_PRENOM']." ".$_SESSION['USER_NOM']."<br>";
-        //var_dump($token);
-		echo json_encode($token, 201);
-	}else {
-		echo "Identifiant incorrect!";
-	}
-
+    $response = array();
+    $profil = FunctionsWS::getProfil($_SESSION["TOKEN"]);
+    if ($token) {
+        $response["success"] = true;
+        $response["id"] = $_SESSION['USER_ID'];
+        $response["password"] = $_SESSION['USER_MDP'];
+        $response["name"] = $_SESSION['USER_NOM'];
+        $response["surname"] = $_SESSION['USER_PRENOM'];
+        $response["user_surname"] = $_SESSION['USER_USERNAME'];
+        $response["mail"] = $_SESSION['USER_MAIL'];
+        $response["profil"] = $_SESSION['USER_ID_PROFIL'];
+        $response["date_maj"] = $_SESSION['USER_DATEMAJ_USER'];
+        $response["token"] = $_SESSION['TOKEN'];
+        $response["lib_profil"] = $profil->LIB_PROFIL;
+        $response["type_profil"] = $profil->TYPE_ZONE;
+    }else {
+        $response["success"] = false;
+        $response["message"] = "Un probleme interne est survenu (check var_dump & echo)";
+    }
+    
+    echo json_encode($response, 200);
 
 });
 
 $app->post('/update', function () use ($app) {
 
-    session_start();
-
-    $update = FunctionsWS::updatePasswd($_SESSION['TOKEN'], $app->request->post('password'));
-    $token = FunctionsWS::getUser();
-    if (is_object($token)) {
-        echo "New password of ".$_SESSION['USER_PRENOM']." ".$_SESSION['USER_NOM']." is now : ".$_SESSION['USER_MDP']."<br>";
-        //var_dump($token);
-        echo json_encode($token, 201);
+    FunctionsWS::loadSessionFromCookie();
+    
+    $password = $app->request->post('password');
+    $token = $app->request->post('token');
+    $id = $app->request->post('id');
+    
+    $user = FunctionsWS::updatePasswd($token, $password, $id);
+    
+    $response = array();
+    if (is_object($user)) {
+        $response["success"] = true;
+        $response["password"] = $password;
+        $response["message"] = "Mot de passe de ".$id." modifie : ".$password;
     }else {
-		echo "Identifiant incorrect!";
-	}
+        $response["success"] = false;
+        $response["message"] = "Un problème interne est survenu (check var_dump & echo)";
+    }
+    
+    echo json_encode($response, 200);
 
 });
 
 $app->get('/getuser', function () use ($app) {
-
-    session_start();
 
     $token = FunctionsWS::getUser($_SESSION['TOKEN']);
     var_dump($token);
@@ -216,8 +242,6 @@ $app->get('/getuser', function () use ($app) {
 
 $app->get('/getprofil', function () use ($app) {
 
-    session_start();
-
     $token = Token::getProfil($_SESSION['TOKEN']);
     var_dump($token);
     echo json_encode($token, 201);
@@ -225,8 +249,7 @@ $app->get('/getprofil', function () use ($app) {
 });
 
 $app->get('/getselect_temps', function () use ($app) {
-
-    session_start();
+    
     $temps = array();
     $temps = FunctionsWS::getSelect_temps($_SESSION['TOKEN']);
     var_dump($temps);
@@ -234,13 +257,49 @@ $app->get('/getselect_temps', function () use ($app) {
 
 });
 
+$app->get('/getspinnerville', function() use ($app) {
+    
+    $lib_profil = $app->request->get('profil');
+    $towns = FunctionsWS::getSpinnerVille($lib_profil);
+    echo json_encode($towns, 201);
+    
+});
+
+$app->get('/addSaisieVente', function () use ($app) {
+    
+    //$string = '[{"name":"Hifi","realTurnover":46464,"objTurnover":4943734,"realSales":854,"objSales":484575,"realMargin":8464649,"objMargin":484545},{"name":"Four","realTurnover":56464,"objTurnover":86494,"realSales":5676437,"objSales":79494,"realMargin":7845464,"objMargin":784676}]';  
+    
+    $string = $app->request->post('string_vente');
+    $id_profil = $app->request->post("id_profil");
+    $token = $app->request->post("token");
+    
+    $json_vente = json_decode($string);
+    
+    $insertion = FunctionsWS::addSaisieVente($json_vente, $id_profil, $token);
+    
+    $response = array();
+    if ($insertion == true) {
+        $response["success"] = true;
+        $response["message"] = "Ajout avec succes des ventes";
+    }else {
+        $response["success"] = false;
+        $response["message"] = "Un problème interne (echo/vardump) ou violation contrainte primary key";
+    }
+    
+    echo json_encode($response, 201);
+    
+});
+
 $app->get('/getTableauAcceuilDM', function () use ($app) {
 
-    session_start();
-
-    $tableau = FunctionsWS::getTableauAccueilDM($_SESSION['TOKEN']);
-    var_dump($tableau);
-    //echo json_encode($tableau, 201);
+    $id = $app->request->get('id');
+    $id_profil = $app->request->get('id_profil');
+    $token = $app->request->get('token');
+    
+    $tableau = FunctionsWS::getTableauAccueilDM($id, $id_profil, $token);
+    //var_dump($tableau);
+    
+    echo json_encode($tableau, 201);
 
 });
 

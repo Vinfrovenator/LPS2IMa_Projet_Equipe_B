@@ -9,7 +9,7 @@ class AllUser extends Filtre {
 	public static function getFiltreUser()
 	{
 		static $rtn = array();
-
+        
         //$class = 'All\AllUser'
 		$class = get_called_class();
 
@@ -17,7 +17,7 @@ class AllUser extends Filtre {
             //$vars contient le résultat de la requête
 			$vars = Model::factory(get_called_class())
 				->find_many();
-
+            
 			$rtn[$class] = array();
 			foreach($vars as $var)
 			{
@@ -29,7 +29,7 @@ class AllUser extends Filtre {
 					'mail' => $var->{'MAIL'},
 					'maj' => $var->{'DATEMAJ_USER'},
 					'mdp' => $var->{'PASSWORD'},
-          'idprofil' => $var->{'ID_PROFIL'}
+                    'idprofil' => $var->{'ID_PROFIL'}
 				);
 			}
 		}
