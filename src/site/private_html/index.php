@@ -179,9 +179,9 @@ $app->post('/connection', function() use ($app) {
     //Reading post params
     $email = $app->request->post('email');
     $password = $app->request->post('mdp');
-    
+
     $response = array();
-    
+
     $token = FunctionsWS::connect($email, $password);
 
     $response = array();
@@ -203,7 +203,7 @@ $app->post('/connection', function() use ($app) {
         $response["success"] = false;
         $response["message"] = "Un probleme interne est survenu (check var_dump & echo)";
     }
-    
+
     echo json_encode($response, 200);
 
 });
@@ -211,13 +211,13 @@ $app->post('/connection', function() use ($app) {
 $app->post('/update', function () use ($app) {
 
     FunctionsWS::loadSessionFromCookie();
-    
+
     $password = $app->request->post('password');
     $token = $app->request->post('token');
     $id = $app->request->post('id');
-    
+
     $user = FunctionsWS::updatePasswd($token, $password, $id);
-    
+
     $response = array();
     if (is_object($user)) {
         $response["success"] = true;
@@ -227,7 +227,7 @@ $app->post('/update', function () use ($app) {
         $response["success"] = false;
         $response["message"] = "Un problème interne est survenu (check var_dump & echo)";
     }
-    
+
     echo json_encode($response, 200);
 
 });
@@ -249,7 +249,7 @@ $app->get('/getprofil', function () use ($app) {
 });
 
 $app->get('/getselect_temps', function () use ($app) {
-    
+
     $temps = array();
     $temps = FunctionsWS::getSelect_temps($_SESSION['TOKEN']);
     var_dump($temps);
@@ -258,25 +258,25 @@ $app->get('/getselect_temps', function () use ($app) {
 });
 
 $app->get('/getspinnerville', function() use ($app) {
-    
+
     $lib_profil = $app->request->get('profil');
     $towns = FunctionsWS::getSpinnerVille($lib_profil);
     echo json_encode($towns, 201);
-    
+
 });
 
 $app->get('/addSaisieVente', function () use ($app) {
-    
-    //$string = '[{"name":"Hifi","realTurnover":46464,"objTurnover":4943734,"realSales":854,"objSales":484575,"realMargin":8464649,"objMargin":484545},{"name":"Four","realTurnover":56464,"objTurnover":86494,"realSales":5676437,"objSales":79494,"realMargin":7845464,"objMargin":784676}]';  
-    
+
+    //$string = '[{"name":"Hifi","realTurnover":46464,"objTurnover":4943734,"realSales":854,"objSales":484575,"realMargin":8464649,"objMargin":484545},{"name":"Four","realTurnover":56464,"objTurnover":86494,"realSales":5676437,"objSales":79494,"realMargin":7845464,"objMargin":784676}]';
+
     $string = $app->request->post('string_vente');
     $id_profil = $app->request->post("id_profil");
     $token = $app->request->post("token");
-    
+
     $json_vente = json_decode($string);
-    
+
     $insertion = FunctionsWS::addSaisieVente($json_vente, $id_profil, $token);
-    
+
     $response = array();
     if ($insertion == true) {
         $response["success"] = true;
@@ -285,20 +285,35 @@ $app->get('/addSaisieVente', function () use ($app) {
         $response["success"] = false;
         $response["message"] = "Un problème interne (echo/vardump) ou violation contrainte primary key";
     }
-    
+
     echo json_encode($response, 201);
-    
+
 });
 
-$app->get('/getTableauAcceuilDM', function () use ($app) {
+$app->get('/getTableauAccueilDM', function () use ($app) {
 
     $id = $app->request->get('id');
     $id_profil = $app->request->get('id_profil');
     $token = $app->request->get('token');
-    
+
     $tableau = FunctionsWS::getTableauAccueilDM($id, $id_profil, $token);
     //var_dump($tableau);
-    
+
+    echo json_encode($tableau, 201);
+
+});
+
+$app->get('/getTableauAccueilDR', function () use ($app) {
+
+    $id = $app->request->get('id');
+    $id_profil = $app->request->get('id_profil');
+    $ville = $app->request->get('ville');
+    $token = $app->request->get('token');
+
+
+    $tableau = FunctionsWS::getTableauAccueilDR($id, $id_profil, $ville, $token);
+    //var_dump($tableau);
+
     echo json_encode($tableau, 201);
 
 });

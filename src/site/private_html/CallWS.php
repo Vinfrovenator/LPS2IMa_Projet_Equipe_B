@@ -46,11 +46,21 @@ $app->get('/getselect_temps', function () use ($app) {
 
 });
 
-$app->get('/getTableauAcceuilDM', function () use ($app) {
+$app->get('/getTableauAccueilDM', function () use ($app) {
 
     session_start();
 
     $tableau = FunctionsWS::getTableauAccueilDM($_SESSION['TOKEN']);
+    var_dump($tableau);
+    //echo json_encode($tableau, 201);
+
+});
+
+$app->get('/getTableauAccueilDR', function () use ($app) {
+
+    session_start();
+
+    $tableau = FunctionsWS::getTableauAccueilDR($_SESSION['TOKEN']);
     var_dump($tableau);
     //echo json_encode($tableau, 201);
 
